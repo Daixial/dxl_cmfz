@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.cmfz.dao.LogsDao">
+
+    <!-- private String id;
+    private String user;
+    private Date time;
+    private String resource;
+    private String action;
+    private String message;
+    private String result;
+    -->
+
+    <sql id="sql2">
+        select id,user,time,resource,action,message,result from t_log
+    </sql>
+
+    <!-- 添加 -->
+    <insert id="insert" parameterType="com.baizhi.cmfz.entity.Logs">
+        insert  into t_log values(#{id},#{user},#{time},#{resource},#{action},#{message},#{result})
+    </insert>
+
+
+    <!-- 分页查询 -->
+    <select id="fingPageAndView" resultType="com.baizhi.cmfz.entity.Logs">
+        <include refid="sql2"/> limit #{page},#{rows}
+    </select>
+    <!-- 查询总条数 -->
+    <select id="findPage" resultType="java.lang.Long">
+        select COUNT(id) from t_log
+    </select>
+
+
+</mapper>

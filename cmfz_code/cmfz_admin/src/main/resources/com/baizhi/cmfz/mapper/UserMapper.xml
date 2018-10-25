@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.cmfz.dao.UserDao">
+
+
+    <sql id="sql">
+        select id,phone,name,nickName,sex,createDate,img,signature,password,
+         status,location
+         from t_user
+    </sql>
+    <!-- 查所有的轮播图  -->
+    <select id="fingAll" resultType="com.baizhi.cmfz.entity.User">
+        <include refid="sql"/>
+    </select>
+    <!-- 添加图片 -->
+    <insert id="insert" parameterType="com.baizhi.cmfz.entity.User">
+        insert  into t_user values(
+        #{id},#{phone},#{name},#{nickName},#{sex},#{createDate}
+        ,#{img},#{signature},#{password},#{salt},#{status},#{location}
+        )
+    </insert>
+    <!-- 修改轮播图状态 -->
+    <update id="update" parameterType="com.baizhi.cmfz.entity.User">
+        update t_user set status=#{status} where id=#{id}
+    </update>
+    <!-- 查询一个 -->
+    <select id="findOne" parameterType="java.lang.String" resultType="com.baizhi.cmfz.entity.User">
+        <include refid="sql"/> where id=#{id}
+    </select>
+    <!-- 分页查询 -->
+    <select id="fingPageAndView" resultType="com.baizhi.cmfz.entity.User">
+        <include refid="sql"/> limit #{page},#{rows}
+    </select>
+    <!-- 查询总条数 -->
+    <select id="findPage" resultType="java.lang.Long">
+        select COUNT(id) from t_user
+    </select>
+    <!--查看用户的活跃度-->
+    <select id="findActive" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        <![CDATA[
+        select count(id) from t_user where TIMESTAMPDIFF(DAY,createDate,now()) < #{day}
+        ]]>
+    </select>
+
+    <!--地图显示用户活跃度-->
+    <select id="findactive" resultType="com.baizhi.cmfz.entity.Statistics" parameterType="java.lang.String" >
+        select count(id) value,location name from t_user where sex=#{sex} group by location
+    </select>
+
+</mapper>

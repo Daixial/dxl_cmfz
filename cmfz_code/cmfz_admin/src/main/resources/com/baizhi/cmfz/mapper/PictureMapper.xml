@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.cmfz.dao.PictureDao">
+
+    <!-- private  String id;
+    private  String name;
+    private  String imgurl;
+    private Date createDate;
+    private  String status; -->
+
+    <sql id="sql2">
+        select id,name,imgurl,createDate,status,groups from t_picture
+    </sql>
+    <!-- 查所有的轮播图  -->
+    <select id="fingAll" resultType="com.baizhi.cmfz.entity.Picture">
+        <include refid="sql2"/>
+    </select>
+    <!-- 添加图片 -->
+    <insert id="insert" parameterType="com.baizhi.cmfz.entity.Picture">
+        insert  into t_picture values(#{id},#{name},#{imgurl},#{createDate},#{status},#{groups})
+    </insert>
+    <!-- 修改轮播图状态 -->
+    <update id="update" parameterType="com.baizhi.cmfz.entity.Picture">
+        update t_picture set status=#{status} where id=#{id}
+    </update>
+    <!-- 查询一个 -->
+    <select id="findOne" parameterType="java.lang.String" resultType="com.baizhi.cmfz.entity.Picture">
+        <include refid="sql2"/> where id=#{id}
+    </select>
+    <!-- 分页查询 -->
+    <select id="fingPageAndView" resultType="com.baizhi.cmfz.entity.Picture">
+        <include refid="sql2"/> limit #{page},#{rows}
+    </select>
+    <!-- 查询总条数 -->
+    <select id="findPage" resultType="java.lang.Long">
+        select COUNT(id) from t_picture
+    </select>
+
+
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.cmfz.dao.ManagerDao">
+
+    <!-- 登录 -->
+    <select id="select1" parameterType="java.lang.String" resultType="com.baizhi.cmfz.entity.Managers">
+        select  id,name,password,solt from t_manager where name=#{name}
+    </select>
+    <!-- 修改密码 -->
+    <update id="update1" parameterType="com.baizhi.cmfz.entity.Managers">
+        update t_manager set password=#{password} where id=#{id}
+    </update>
+
+</mapper>
