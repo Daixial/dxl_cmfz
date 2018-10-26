@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ArticleServiceImpl implements ArticleService {
+public class ArticleServiceImpl implements ArticleService {  //  这是  ！！！！！
     @Resource
     private ArticleDao articleDao;
     @Override
